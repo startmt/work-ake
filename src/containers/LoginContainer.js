@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import DefaultLayout from '../layouts/auth'
 import { Button, Form } from 'semantic-ui-react'
 import UsernameInput from '../components/input'
 import PasswordInput from '../components/input'
