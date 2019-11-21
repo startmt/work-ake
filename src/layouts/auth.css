@@ -1,0 +1,15 @@
+.auth-layout-wrapper {
+  min-height: fit-content;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #653e42;;
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
