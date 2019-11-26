@@ -3,13 +3,13 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 import { List, Skeleton, Typography } from 'antd'
 import { confirmOrder } from '../api/restaurant'
-import { green } from 'ansi-colors'
 const { Title, Text } = Typography
 const RecieveOrderContainer = ({
   data,
   title,
   statusOk,
   handleThenProcess,
+  acceptText,
 }) => {
   const [initLoading, setInitLoading] = useState(true)
   const handleConfirm = (state, id) => {
@@ -34,11 +34,11 @@ const RecieveOrderContainer = ({
     }
   }, [])
   return (
-    <div className="mv-3">
+    <div className="mv-3 ">
       <Title className="text-center">{title}</Title>
       <div className="container">
         <List
-          className="demo-loadmore-list"
+          className="list-console"
           loading={initLoading}
           itemLayout="horizontal"
           dataSource={data}
@@ -51,7 +51,7 @@ const RecieveOrderContainer = ({
                   onClick={() => {
                     handleConfirm(statusOk, item.id)
                   }}>
-                  ยอมรับ
+                  {acceptText}
                 </div>,
                 <Text
                   type="danger"
@@ -88,6 +88,7 @@ RecieveOrderContainer.propTypes = {
   title: PropTypes.string,
   statusOk: PropTypes.string,
   handleThenProcess: PropTypes.func,
+  acceptText: PropTypes.string
 }
 RecieveOrderContainer.defaultProps = {
   title: 'Title',

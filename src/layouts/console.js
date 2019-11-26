@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Layout, Menu, Icon } from 'antd'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
@@ -6,29 +6,36 @@ import './console.css'
 const { Content, Sider } = Layout
 const { SubMenu } = Menu
 const DefaultLayout = ({ children }) => {
-  const[onKey, setOnKey] = useState('console')
-
+  useEffect(() => {
+    if (children.props.page) {
+      setOnKey(children.props.page)
+    }
+  })
+  const [onKey, setOnKey] = useState('console')
   return (
     <Layout>
       <Sider className="side-bar-console">
         <Menu
           mode="inline"
-          defaultSelectedKeys={[onKey]}
+          selectedKeys={[onKey]}
+          defaultOpenKeys={['sub1']}
           style={{ height: '100%', borderRight: 0 }}>
           <SubMenu
             key="sub1"
             title={
               <span>
                 <Icon type="user" />
-                เมนู
+                รายการอาหาร
               </span>
             }>
-            <Menu.Item key="1">
+            <Menu.Item key="console">
               <Link to="/console">รับออเดอร์</Link>
             </Menu.Item>
 
-            <Menu.Item key="2">
-              <Link to="/console/process">รายการอาหาร</Link>
+            <Menu.Item key="process">
+              <Link to="/console/process">
+                รายการอาหารที่ต้องทำ
+              </Link>
             </Menu.Item>
           </SubMenu>
           <SubMenu
@@ -36,11 +43,20 @@ const DefaultLayout = ({ children }) => {
             title={
               <span>
                 <Icon type="laptop" />
-                subnav 2
+                ผู้ใช้งาน
               </span>
             }>
-            <Menu.Item key="5">option5</Menu.Item>
-            <Menu.Item key="6">option6</Menu.Item>
+            <Menu.Item key="5">
+              <Link to="/console/profile">
+                จัดการผู้ใช้งาน
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="6">
+              <Link to="/main">
+                กลับสู่หน้าหลัก
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="7">ออกจากระบบ</Menu.Item>
           </SubMenu>
         </Menu>
       </Sider>

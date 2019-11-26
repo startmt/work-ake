@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import DefaultLayout from '../../layouts/console'
 import RecieveOrderContainer from '../../containers/RecieveOrderContainer'
 import { getOrder } from '../../api/restaurant'
-export default () => {
+import withAuth from '../../hoc/withAuth'
+
+export default withAuth(() => {
   const [data, setData] = useState([])
   useEffect(() => {
     getOrder().then((res) => {
@@ -13,12 +15,19 @@ export default () => {
       )
     })
   }, [])
-  const handleThenProcess = (id) =>{
-    setData(data.filter(d=>d.id !== id))
+  const handleThenProcess = (id) => {
+    setData(data.filter((d) => d.id !== id))
   }
   return (
-    <DefaultLayout>
-      <RecieveOrderContainer data={data} title="รับออเดอร์" statusOk="Process" handleThenProcess={handleThenProcess}/>
+    <DefaultLayout page="console">
+      <RecieveOrderContainer
+        data={data}
+        title="รับออเดอร์"
+        statusOk="Process"
+        handleThenProcess={handleThenProcess}
+        page="console"
+        acceptText="ยอมรับ"
+      />
     </DefaultLayout>
   )
-}
+})

@@ -31,3 +31,10 @@ export const confirmOrder = (status, id) => {
     config,
   )
 }
+export const updateProfile = (data) => {
+  return axios.put(
+    env.RESTAURANT_SERVICE + '/profile',
+    data,
+    config,
+  )
+}

@@ -38,3 +38,21 @@
 .green {
   color: green;
 }
+.list-console{
+  background: white;
+  padding: 20px !important;
+  border-top: 5px solid #06487e;
+}
+.form-profile {
+  padding: 1.875rem !important;
+  border: 1px solid #dee2e6 !important;
+  background: #fff !important;
+  max-width: 700px !important;
+  margin: auto !important;
+}
+.w-100{
+  width: 100% !important;
+}
+.ant-upload-list-item-info{
+  display: none !important;
+}

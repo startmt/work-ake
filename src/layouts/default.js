@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Layout, Menu, Button } from 'antd'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import './default.css'
 import withAuth from '../hoc/withAuth'
+import ModalHistory from '../components/ModalHistory'
 const { Header, Content } = Layout
 const DefaultLayout = ({ children, data }) => {
   const [role, setRole] = useState('')
@@ -10,6 +12,7 @@ const DefaultLayout = ({ children, data }) => {
     localStorage.clear()
     window.location.replace('/')
   }
+  const [visibleModal, setVisibleModal] = useState(false)
   useEffect(() => {
     if (data.data) {
       setRole(data.data.role)
@@ -30,12 +33,21 @@ const DefaultLayout = ({ children, data }) => {
               เครื่องดื่ม
             </Menu.Item>
             <div className="right-item">
-              {role == 'Restaurant' && (
-                <a className="mh-1">Console</a>
+              {role == 'Restaurant' ? (
+                <Link to="/console">
+                  <a className="mh-1">Console</a>
+                </Link>
+              ) : (
+                <Button
+                  className="mh-1"
+                  onClick={() => {
+                    setVisibleModal(true)
+                  }}>
+                  ตรวจสอบ Order
+                </Button>
               )}
-              <Button className="mh-1">
-                ตรวจสอบ Order
-              </Button>
+
+              <ModalHistory />
               <Button onClick={handleLogout}>Logout</Button>
             </div>
           </Menu>

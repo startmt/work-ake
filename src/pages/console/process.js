@@ -22,7 +22,9 @@ export default () => {
         data={data}
         title="รายการที่ต้องทำ"
         statusOk="Finish"
+        page="process"
         handleThenProcess={handleThenProcess}
+        acceptText="เสร็จสิ้น"
       />
     </DefaultLayout>
   )
