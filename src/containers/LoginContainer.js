@@ -1,14 +1,40 @@
 import React, { useState } from 'react'
-import { Button, Form } from 'semantic-ui-react'
+import { Form, Message } from 'semantic-ui-react'
 import UsernameInput from '../components/input'
 import PasswordInput from '../components/input'
+import { Button } from 'antd'
 import ButtonRegister from '../components/ButtonRegister'
-import ButtonShopRegister from '../components/ButtonRegister'
 import '../static/logincontainer.css'
+import { Link } from 'react-router-dom'
+import env from '../env'
 import { Row, Col } from 'antd'
+import axios from 'axios'
 export default () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+  const [isError, setIsError] = useState(false)
+  const handleLogin = () => {
+    setIsError(false)
+    const data = {
+      username,
+      password,
+    }
+    axios
+      .post(env.AUTH_SERVICE + '/login', data)
+      .then((res) => {
+        localStorage.setItem('token', res.data.data.token)
+        localStorage.setItem(
+          'username',
+          res.data.data.username,
+        )
+        window.location.replace('/main')
+      })
+      .catch((e) => {
+        setErrorMessage(e.response.data.message)
+        setIsError(true)
+      })
+  }
   return (
     <Row>
       <Col span={24}>
@@ -26,20 +52,27 @@ export default () => {
             <Form.Field>
               <PasswordInput
                 value={password}
-                title="username"
+                title="password"
                 type="password"
                 onChange={setPassword}
                 required={true}
               />
             </Form.Field>
-            <Button type="submit">login</Button>
           </Form>
-          <ButtonRegister title="สมัครสมาชิก" />
+          {isError && (
+            <Message
+              error
+              header="Error"
+              content={errorMessage}
+            />
+          )}
 
-          <ButtonShopRegister
-            title="สมัครสมาชิกร้านค้า"
-            type="default"
-          />
+          <Button type="submit" onClick={handleLogin}>
+            login
+          </Button>
+          <Link to="/register">
+            <ButtonRegister title="สมัครสมาชิก" />
+          </Link>
         </div>
       </Col>
     </Row>

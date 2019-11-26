@@ -8,17 +8,22 @@ export default () => {
     getOrder().then((res) => {
       setData(
         res.data.data.filter(
-          (data) => data.status == 'Init',
+          (data) => data.status == 'Process',
         ),
       )
     })
   }, [])
-  const handleThenProcess = (id) =>{
-    setData(data.filter(d=>d.id !== id))
+  const handleThenProcess = (id) => {
+    setData(data.filter((d) => d.id !== id))
   }
   return (
     <DefaultLayout>
-      <RecieveOrderContainer data={data} title="รับออเดอร์" statusOk="Process" handleThenProcess={handleThenProcess}/>
+      <RecieveOrderContainer
+        data={data}
+        title="รายการที่ต้องทำ"
+        statusOk="Finish"
+        handleThenProcess={handleThenProcess}
+      />
     </DefaultLayout>
   )
 }

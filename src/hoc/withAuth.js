@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import env from '../env'
 export default (Component) => (props) => {
-  const [data, setData] = useState([])
+  const [data, setData] = useState({})
   useEffect(() => {
     const token = localStorage.getItem('token')
     axios
-      .get(process.env.REACT_APP_API_URL + '/api/data', {
+      .get(env.AUTH_SERVICE, {
         headers: { Authorization: 'Bearer ' + token },
       })
       .then((data) => {
-        setData(data.data, (isAuth = true))
+        setData({...data.data, isAuth: true})
       })
       .catch(() => {
-        localStorage.clear()
         setData({
           isauth: false,
         })

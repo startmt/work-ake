@@ -1,9 +1,20 @@
-import React from 'react'
-import { Layout, Menu, Button, Row, Col } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Layout, Menu, Button } from 'antd'
 import PropTypes from 'prop-types'
 import './default.css'
+import withAuth from '../hoc/withAuth'
 const { Header, Content } = Layout
-const DefaultLayout = ({ children }) => {
+const DefaultLayout = ({ children, data }) => {
+  const [role, setRole] = useState('')
+  const handleLogout = () => {
+    localStorage.clear()
+    window.location.replace('/')
+  }
+  useEffect(() => {
+    if (data.data) {
+      setRole(data.data.role)
+    }
+  })
   return (
     <Layout>
       <Header style={{ padding: 0, background: '#fff' }}>
@@ -19,11 +30,13 @@ const DefaultLayout = ({ children }) => {
               เครื่องดื่ม
             </Menu.Item>
             <div className="right-item">
-              <a className="mh-1">Console</a>
+              {role == 'Restaurant' && (
+                <a className="mh-1">Console</a>
+              )}
               <Button className="mh-1">
                 ตรวจสอบ Order
               </Button>
-              <Button>Logout</Button>
+              <Button onClick={handleLogout}>Logout</Button>
             </div>
           </Menu>
         </div>
@@ -34,8 +47,13 @@ const DefaultLayout = ({ children }) => {
     </Layout>
   )
 }
-export default DefaultLayout
+export default withAuth(DefaultLayout)
 
 DefaultLayout.propTypes = {
   children: PropTypes.element,
+  data: PropTypes.object,
+  role: PropTypes.string,
+}
+DefaultLayout.defaultProps = {
+  role: 'Customer',
 }
