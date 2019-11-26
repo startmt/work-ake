@@ -4,13 +4,14 @@ import './shopcard.css'
 import PropTypes from 'prop-types'
 const { Meta } = Card
 
-const ShopCard = ({ shopName, img, descriptionText }) => {
+const ShopCard = ({ shopName, img, descriptionText, openModal }) => {
   const description = () => (
     <div className="text-clamp">{descriptionText}</div>
   )
   return (
     <Card
       hoverable
+      onClick={()=>openModal(true)}
       className="shopcard-wrapper"
       cover={<img alt="example" src={img} />}>
       <Meta
@@ -25,6 +26,7 @@ ShopCard.propTypes = {
   shopName: PropTypes.string,
   img: PropTypes.string,
   descriptionText: PropTypes.string,
+  openModal: PropTypes.func
 }
 ShopCard.defaultProps = {
   shopName: 'ร้านป้าสล๊อต',

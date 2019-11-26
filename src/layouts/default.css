@@ -1,0 +1,14 @@
+.menu-item {
+  display: flex !important;
+  align-items: center !important  ;
+}
+.menu {
+  line-height: 63px !important;
+  border: none !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.right-item {
+  margin-left: auto !important;
+}
