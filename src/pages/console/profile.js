@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import DefaultLayout from '../../layouts/console'
 import ProfileContainer from '../../containers/ProfileContainer'
 import withAuth from '../../hoc/withAuth'
@@ -11,7 +11,7 @@ export default withAuth((props) => {
 
   return (
     <DefaultLayout>
-      <ProfileContainer />
+      <ProfileContainer page="profile"/>
     </DefaultLayout>
   )
 })

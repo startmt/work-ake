@@ -16,6 +16,11 @@ export default () => {
   const [isError, setIsError] = useState(false)
   const handleLogin = () => {
     setIsError(false)
+    if(username === '' || password === '') {
+      setIsError(true)
+      setErrorMessage('กรุณากรอก Username / Password ให้ถูกต้อง')
+      return 
+    }
     const data = {
       username,
       password,
@@ -33,6 +38,7 @@ export default () => {
       .catch((e) => {
         setErrorMessage(e.response.data.message)
         setIsError(true)
+        return
       })
   }
   return (

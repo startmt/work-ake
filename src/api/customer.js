@@ -9,3 +9,7 @@ const config = {
 export const sendOrder = (order) => {
   return axios.post(env.CUSTOMER_SERVICE+'/orders', order, config)
 }
+
+export const getOrder = () => {
+  return axios.get(env.CUSTOMER_SERVICE+'/orders', config)
+}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import '../static/logincontainer.css'
-import { Typography } from 'antd'
+import { Typography, message } from 'antd'
 import ShopCard from '../components/ShopCard'
 import ModalOrder from '../components/ModalOrder'
 import {
@@ -10,7 +10,7 @@ import {
 import env from '../env'
 import { sendOrder } from '../api/customer'
 const { Title } = Typography
-export default () => {
+export default ({ foodRef, noodleRef, drinkRef }) => {
   const [data, setData] = useState([])
   const [visibleModal, setVisibleModal] = useState(false)
   const [desc, setDest] = useState({})
@@ -31,6 +31,8 @@ export default () => {
     }
     sendOrder(data).then(() => {
       setOrder('')
+      message.success('สั่งรายการสำเร็จ !!')
+      setVisibleModal(false)
     })
   }
   const handleCancel = () => setVisibleModal(false)
@@ -52,7 +54,7 @@ export default () => {
       />
       <div className="container">
         <Title className="text-center">อาหารตามสั่ง</Title>
-        <div className="mv-3">
+        <div className="mv-3" ref={foodRef}>
           <div className="row">
             {data
               .filter((data) => data.type === 'Food')
@@ -75,7 +77,7 @@ export default () => {
               ))}
           </div>
         </div>
-        <div className="mv-3">
+        <div className="mv-3" id="noodle" ref={noodleRef}>
           <Title className="text-center">ก๋วยเตี๋ยว</Title>
           <div className="row">
             {data
@@ -99,7 +101,7 @@ export default () => {
               ))}
           </div>
         </div>
-        <div className="mv-3">
+        <div className="mv-3" ref={drinkRef}>
           <Title className="text-center">เครื่องดื่ม</Title>
           <div className="row">
             {data

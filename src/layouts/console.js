@@ -11,6 +11,10 @@ const DefaultLayout = ({ children }) => {
       setOnKey(children.props.page)
     }
   })
+  const handleLogout = () => {
+    localStorage.clear()
+    window.location.replace('/')
+  }
   const [onKey, setOnKey] = useState('console')
   return (
     <Layout>
@@ -18,7 +22,7 @@ const DefaultLayout = ({ children }) => {
         <Menu
           mode="inline"
           selectedKeys={[onKey]}
-          defaultOpenKeys={['sub1']}
+          defaultOpenKeys={['sub1', 'sub2']}
           style={{ height: '100%', borderRight: 0 }}>
           <SubMenu
             key="sub1"
@@ -46,17 +50,17 @@ const DefaultLayout = ({ children }) => {
                 ผู้ใช้งาน
               </span>
             }>
-            <Menu.Item key="5">
+            <Menu.Item key="profile">
               <Link to="/console/profile">
                 จัดการผู้ใช้งาน
               </Link>
             </Menu.Item>
             <Menu.Item key="6">
-              <Link to="/main">
-                กลับสู่หน้าหลัก
-              </Link>
+              <Link to="/main">กลับสู่หน้าหลัก</Link>
             </Menu.Item>
-            <Menu.Item key="7">ออกจากระบบ</Menu.Item>
+            <Menu.Item key="7">
+              <a onClick={handleLogout}>ออกจากระบบ</a>
+            </Menu.Item>
           </SubMenu>
         </Menu>
       </Sider>

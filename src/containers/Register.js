@@ -27,7 +27,7 @@ export default () => {
       lastName,
       role
     }
-    axios.post(env.AUTH_SERVICE+'/register', data).then(()=>window.location.replace('/'))
+    axios.post(env.AUTH_SERVICE+'/register', data).then(()=>window.location.replace('/')).catch(  )
   }
   return (
     <Row>

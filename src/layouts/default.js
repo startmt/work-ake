@@ -5,8 +5,14 @@ import { Link } from 'react-router-dom'
 import './default.css'
 import withAuth from '../hoc/withAuth'
 import ModalHistory from '../components/ModalHistory'
+import { getOrder } from '../api/customer'
 const { Header, Content } = Layout
+
 const DefaultLayout = ({ children, data }) => {
+  const handleOk = () => {
+    setVisibleModal(false)
+  }
+  const [order, setOrder] = useState([])
   const [role, setRole] = useState('')
   const handleLogout = () => {
     localStorage.clear()
@@ -18,19 +24,42 @@ const DefaultLayout = ({ children, data }) => {
       setRole(data.data.role)
     }
   })
+  const handleModal = () => {
+    setVisibleModal(true)
+    getOrder().then((res) => setOrder(res.data.data))
+  }
+
+  const handleNav = (ref) => {
+    window.scrollTo(0, ref.current.offsetTop)
+  }
   return (
     <Layout>
       <Header style={{ padding: 0, background: '#fff' }}>
         <div className="container">
           <Menu mode="horizontal" className="menu">
             <Menu.Item className="menu-item" key="1">
-              อาหารตามสั่ง
+              <a
+                onClick={() => {
+                  handleNav(children.props.foodRef)
+                }}>
+                อาหารตามสั่ง
+              </a>
             </Menu.Item>
             <Menu.Item className="menu-item" key="2">
-              ก๋วยเตี๋ยว
+              <a
+                onClick={() => {
+                  handleNav(children.props.noodleRef)
+                }}>
+                ก๋วยเตี๋ยว
+              </a>
             </Menu.Item>
             <Menu.Item className="menu-item" key="3">
-              เครื่องดื่ม
+              <a
+                onClick={() => {
+                  handleNav(children.props.drinkRef)
+                }}>
+                เครื่องดื่ม
+              </a>
             </Menu.Item>
             <div className="right-item">
               {role == 'Restaurant' ? (
@@ -41,13 +70,17 @@ const DefaultLayout = ({ children, data }) => {
                 <Button
                   className="mh-1"
                   onClick={() => {
-                    setVisibleModal(true)
+                    handleModal()
                   }}>
                   ตรวจสอบ Order
                 </Button>
               )}
 
-              <ModalHistory visible={visibleModal} />
+              <ModalHistory
+                visible={visibleModal}
+                order={order}
+                handleOk={handleOk}
+              />
               <Button onClick={handleLogout}>Logout</Button>
             </div>
           </Menu>

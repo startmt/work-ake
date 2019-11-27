@@ -1,93 +1,70 @@
-import { Modal, Table, Divider, Tag } from 'antd'
+import { Modal, Table, Tag, Button } from 'antd'
 import React from 'react'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 const ModalHistory = ({
   title,
   visible,
   handleOk,
-  handleCancel,
+  order,
 }) => {
-  const formItemLayout = {
-    labelCol: {
-      xs: { span: 24 },
-      sm: { span: 6 },
-    },
-    wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 16 },
-    },
-  }
   const columns = [
     {
-      title: "ร้านค้า",
-      dataIndex: 'name',
+      title: 'ร้านค้า',
+      dataIndex: 'restaurant.name',
       key: 'name',
-      render: text => <a>{text}</a>,
     },
     {
       title: 'รายละเอียดเมนู',
-      dataIndex: 'address',
-      key: 'address',
+      dataIndex: 'detail',
+      key: 'detail',
     },
     {
       title: 'เวลาที่สั่ง',
-      dataIndex: 'age',
-      key: 'age',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: (createdAt) =>
+        moment(createdAt).format('YYYY/MM/DD'),
     },
     {
       title: 'สถานะ',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: tags => (
-        <span>
-          {tags.map(tag => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </span>
-      ),
+      key: 'status',
+      dataIndex: 'status',
+      render: (status) => {
+        let color = 'green'
+        if (status === 'Init') color = 'grey'
+        if (status === 'Process') color = 'blue'
+        if (status === 'Finish') color = 'green'
+        if (status === 'Reject') color = 'red'
+        return (
+          <span>
+            <Tag color={color} key={status}>
+              {status.toUpperCase()}
+            </Tag>
+          </span>
+        )
+      },
     },
-  ];
+  ]
 
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
   return (
     <Modal
       className="modal-wrapper"
       title={title}
       visible={visible}
-      onOk={handleOk}
-      onCancel={handleCancel}>
+      closeIcon={() => null}
+      footer={[
+        <Button key="back" onClick={handleOk}>
+          Close
+        </Button>,
+      ]}
+      onCancel={handleOk}>
       <div className="mv-1">
-        <Table columns={columns} dataSource={data} />
+        <Table
+          columns={columns}
+          size={'small'}
+          dataSource={order}
+        />
       </div>
     </Modal>
   )
