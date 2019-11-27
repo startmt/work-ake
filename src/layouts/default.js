@@ -47,7 +47,7 @@ const DefaultLayout = ({ children, data }) => {
                 </Button>
               )}
 
-              <ModalHistory />
+              <ModalHistory visible={visibleModal} />
               <Button onClick={handleLogout}>Logout</Button>
             </div>
           </Menu>

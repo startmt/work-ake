@@ -56,3 +56,8 @@
 .ant-upload-list-item-info{
   display: none !important;
 }
+.modal-wrapper{
+  width: 600px !important;
+  margin: 30px;
+  padding: 40px 20px !important;
+}
